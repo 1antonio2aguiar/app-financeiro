@@ -1,0 +1,74 @@
+<!-- CTRL + SHIFT + F for pretty -->
+<app-bread-crumb [items]="[{label: 'Tipos Grupos Financeiros',
+   routerLink:'/tiposGruposFinanceiros'}, {label: pageTitle}]"></app-bread-crumb>
+
+<div class="margin">
+
+   <p-panel header="Preencha o Formulario:">
+
+       <!-- {{resourceForm.value | json}} -->
+
+      <form [formGroup]="resourceForm" (submit)="submitForm()">
+
+      <div class="p-grid ui-fluid" style="margin-top: 5px;">
+
+         <div class="p-col-12 p-md-10 p-lg-10" formGroupName="gruposFinanceiros">
+            <label for="gruposFinanceiros">Grupo Financeiro</label>
+            <div class="ui-inputgroup">
+               <button
+                  [disabled]="botaoOnOf"
+                  pButton
+                  type="button"
+                  label="Buscar"
+                  (click)="showGruposFinanceiros($event)"
+               ></button>
+               <input
+                  type="text"
+                  style="font-weight: bold"
+                  pInputText
+                  placeholder="Informe o Grupo Financeiro"
+                  formControlName="descricao"
+                  disabled="true"
+               />
+            </div>
+         </div>
+
+         <div class="p-col-12 p-md-2 p-lg-2" formGroupName="gruposFinanceiros">
+            <label for="sigla">Receita/Despesa</label>
+            <input
+               id="uf"
+               type="text"
+               style="font-weight: bold"
+               size="2"
+               pInputText
+               formControlName="receitaDespesa"
+               disabled="true"
+            />
+         </div>
+
+         <div class="p-col-12 p-md-12 p-lg-12">
+            <label for="descricao">Descrição</label>
+            <input id="descricao" type="text" size="200" pInputText formControlName="descricao">
+            <app-form-field-error
+               [form-control]="resourceForm.get('descricao')" header-colum="descricao">
+            </app-form-field-error>
+         </div>
+
+      </div>
+
+      <div class="p-grid ui-fluid" style="margin-top: 5px;">
+
+      <div class="p-col-12 p-md-2 p-lg-2">
+         <button pButton type="button" label="Voltar" routerLink="/tipos-grupos-financeiros" class="ui-button-danger"></button>
+      </div>
+
+      <div class="p-col-12 p-md-2 p-lg-2">
+         <button pButton type="button" [disabled]="submittingForm || resourceForm.invalid" type="submit"
+            icon="pi pi-check" label="Salvar" class="ui-button-success"></button>
+      </div>
+
+      </div>
+    </form>
+  </p-panel>
+
+</div>

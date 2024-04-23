@@ -1,0 +1,100 @@
+<app-bread-crumb [items]="[{label: 'Endereços'}]"></app-bread-crumb>
+
+<div class="margin">
+
+  <div class="p-col-12 p-md-12 p-lg-12">
+    <app-page-header
+      page-title="Endereços"
+      button-text="+"
+      button-class="btn-success"
+      (click)="showEnderecosModalNew($event)">
+    </app-page-header>
+  </div>
+
+  <div class="p-grid ui-fluid">
+    <div class="p-col-12 p-md-12 p-lg-12">
+      <p-table #tabela [responsive]="true"  [paginator]="false" [lazy]="true" [autoLayout]="true"
+      [value]="resources">
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="blue-bg col-120px">Id</th>
+            <th class="blue-bg col-120px">Tipo Endereço</th>
+            <th class="blue-bg">Logradouro</th>
+            <th class="blue-bg col-120px">Nº</th>
+            <th class="blue-bg">Complemento</th>
+            <th class="blue-bg">Bairro</th>
+            <th class="blue-bg">Cidade</th>
+            <th class="blue-bg col-120px">C.E.P</th>
+            <th rowspan="2" style="text-align: center;" class="blue-bg">Ações</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-enderecos>
+          <tr>
+            <td class="col-120px">
+              {{enderecos.id}}
+            </td>
+
+            <td class="col-200px">
+               <span *ngIf="enderecos.tipoEndereco === 'R'">
+                  {{'RESIDENCIAL'}}
+               </span>
+               <span *ngIf="enderecos.tipoEndereco=== 'C'">
+                  {{'COMERCIAL'}}
+               </span>
+            </td>
+
+            <td>
+              {{enderecos.logradouros.tiposLogradouros.sigla + ' ' + enderecos.logradouros.nome}}
+            </td>
+
+            <td class="col-120px">
+              {{enderecos.numero}}
+            </td>
+
+            <td>
+              {{enderecos.complemento}}
+            </td>
+
+            <td>
+              {{enderecos.bairros.nome}}
+            </td>
+
+            <td>
+              {{enderecos.bairros.cidades.nome + ' - ' +
+              enderecos.bairros.cidades.estados.uf}}
+            </td>
+
+            <td class="col-120px">
+              {{enderecos.ceps.cep | cep}}
+            </td>
+
+            <td class="col-acoes">
+
+              <button
+                pButton
+                type="button"
+                (click)="showEnderecosModalEdit(enderecos.id)"
+                icon="pi pi-pencil"
+                style="margin-right:9px;">
+              </button>
+
+              <button
+                pButton
+                type="button"
+                (click)="showEnderecosModalDelete(enderecos.id)"
+                icon="pi pi-trash"
+                class="ui-button-danger">
+              </button>
+
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+<app-base-resource-confirmation
+  header="Atenção" menssage="Deseja realmente deletar este item ?">
+</app-base-resource-confirmation>
+

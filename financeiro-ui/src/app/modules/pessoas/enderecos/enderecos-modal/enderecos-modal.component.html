@@ -1,0 +1,139 @@
+<p-panel [header]="dadosPessoa">
+
+    <!--{{resourceForm.value | json}} -->
+
+   <form [formGroup]="resourceForm" (submit)="submitForm()" >
+      <div class="p-grid ui-fluid" style="margin-top: 5px;">
+
+         <div class="p-col-12 p-md-12 p-lg-12">
+            <label for="tipoEnderecoDdw" >Tipo Endereço</label>
+            <p-dropdown
+               id="tipoEnderecoDdw"
+               name="tipoEnderecoDdw"
+               [options]="tiposEnderecosList"
+               placeholder="Selecione"
+               [filter]="false"
+               [disabled]="env.botaoOnOf"
+               formControlName="tipoEndereco">
+               <app-form-field-error [form-control]="resourceForm.get('tipoEndereco')"
+                  header-colum="Tipo Endereço"></app-form-field-error>
+            </p-dropdown>
+         </div>
+
+         <div class="p-col-12 p-md-6 p-lg-6">
+            <label for="cep">C.E.P</label>
+            <div class="ui-inputgroup" formGroupName="ceps">
+            <button
+               [disabled]="env.botaoOnOfCep" pButton
+               type="button"
+               label="Buscar"
+               id="btnCep"
+               (click)="showCeps($event)">
+            </button>
+
+            <input
+               placeholder="Informe o CEP"
+               [imask]="masks"
+               [unmask]="true"
+               id="cep"
+               type="text"
+               size="20"
+               pInputText formControlName="cep"
+               style="font-weight: bold;"
+               disabled="true"
+            >
+            </div>
+         </div>
+
+         <div class="p-col-12 p-md-2 p-lg-2">
+            <label for="numero">Número</label>
+            <input id="numero" type="text" size="10" pInputText formControlName="numero">
+            <app-form-field-error [form-control]="resourceForm.get('numero')" header-colum="Número"></app-form-field-error>
+         </div>
+
+         <div class="p-col-12 p-md-4 p-lg-4">
+            <label for="complemento">Complemento</label>
+            <input id="complemento" type="text" size="20" pInputText formControlName="complemento">
+         </div>
+
+         <div class="p-col-12 p-md-11 p-lg-11" formGroupName="cidades">
+            <label for="cidade">Cidade</label>
+            <div class="ui-inputgroup">
+               <button
+                  [disabled]="env.botaoOnOf"
+                  pButton
+                  type="button"
+                  label="Buscar"
+                  id="btnCidade"
+                  (click)="showCidades($event)">
+               </button>
+               <input
+                  type="text"
+                  style="font-weight: bold"
+                  pInputText
+                  placeholder="Informe a cidade"
+                  formControlName="nome"
+                  disabled="true"
+               />
+            </div>
+         </div>
+
+         <div class="p-col-12 p-md-1 p-lg-1" formGroupName="cidades">
+            <label for="sigla">Estado</label>
+            <span formGroupName="estados">
+               <input id="sigla" type="text" style="font-weight: bold;" size="2" pInputText formControlName="uf"
+                  disabled="true">
+            </span>
+         </div>
+
+
+         <div class="p-col-12 p-md-12 p-lg-12" formGroupName="bairros">
+            <label for="cidade">Bairro</label>
+            <div class="ui-inputgroup">
+            <button [disabled]="env.botaoOnOf" pButton type="button" label="Buscar" id="btnBairro" (click)="showBairros($event)"></button>
+            <input type="text" style="font-weight: bold;" pInputText placeholder="Informe o bairro"
+               formControlName="nome" disabled="true">
+            </div>
+         </div>
+
+         <div class="p-col-12 p-md-10 p-lg-10" formGroupName="logradouros">
+            <label for="cidade">Logradouro</label>
+            <div class="ui-inputgroup">
+            <button [disabled]="env.botaoOnOf" pButton type="button" label="Buscar" id="btnLogradouro" (click)="showLogradouros($event)"></button>
+            <input type="text" style="font-weight: bold;" pInputText placeholder="Informe o logradouro"
+               formControlName="nome" disabled="true">
+            </div>
+         </div>
+
+         <div class="p-col-12 p-md-2 p-lg-2" formGroupName="logradouros">
+            <label for="sigla">Tipo</label>
+            <span formGroupName="tiposLogradouros">
+            <input id="sigla" type="text" style="font-weight: bold;" size="2" pInputText formControlName="sigla"
+            disabled="true">
+            </span>
+         </div>
+
+      </div>
+
+      <div class="p-grid ui-fluid" style="margin-top: 5px;">
+
+         <div class="p-col-12 p-md-2 p-lg-2">
+            <button pButton
+               type="button"
+               label="Cancelar" class="ui-button-danger"
+               (click)="fecharModal()">
+            </button>
+         </div>
+
+         <div *ngIf="env.currentActionGlobal != 'DELETE'" class="p-col-12 p-md-2 p-lg-2">
+            <button pButton type="button" [disabled]="submittingForm || resourceForm.invalid" type="submit"
+            icon="pi pi-check" id="btnSalvar" value="Salvar" label="Salvar" class="ui-button-success"></button>
+         </div>
+
+         <div *ngIf="env.currentActionGlobal === 'DELETE'" class="p-col-12 p-md-2 p-lg-2">
+            <button pButton type="button" [disabled]="submittingForm || resourceForm.invalid" type="submit"
+            icon="pi pi-check" id="btnSalvar" value="Salvar" label="Sim" class="ui-button-success"></button>
+         </div>
+      </div>
+   </form>
+</p-panel>

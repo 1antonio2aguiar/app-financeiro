@@ -1,0 +1,17 @@
+<!-- CTRL + SHIFT + F for pretty -->
+<app-bread-crumb [items]="[{label: 'Contratos', routerLink:'/contratos'}, {label: pageTitle}]"></app-bread-crumb>
+
+<div class="p-col-12 text-center">
+   <p-tabView orientation="top" (onChange)="onTabChange($event)">
+      <p-tabPanel header="Contratos" [selected]="selectedTab==0">
+         <app-contratos-cadastro-view>
+         </app-contratos-cadastro-view>
+      </p-tabPanel>
+
+      <p-tabPanel id="abaParcelas" header="Parcelas" [selected]="selectedTab==1"
+         [disabled]="env.tabPanelOnOff">
+         <app-parcelas-contratos-pesquisa>
+         </app-parcelas-contratos-pesquisa>
+      </p-tabPanel>
+   </p-tabView>
+</div>

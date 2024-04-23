@@ -1,0 +1,62 @@
+<app-bread-crumb [items]="[{label: 'Contatos'}]"></app-bread-crumb>
+
+<div class="margin">
+
+  <div class="p-col-12 p-md-12 p-lg-12">
+    <app-page-header
+      page-title="Contatos"
+      button-text="+"
+      button-class="btn-success"
+      (click)="showContatosModalNew($event)" >
+    </app-page-header>
+  </div>
+
+  <div class="p-grid ui-fluid">
+    <div class="p-col-12 p-md-12 p-lg-12">
+      <p-table #tabela [responsive]="true" [paginator]="false" [lazy]="true" [autoLayout]="true" [value]="resources">
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="blue-bg col-120px">Id</th>
+            <th class="blue-bg" style="text-align: left;">Tipo Contato</th>
+            <th class="blue-bg" style="text-align: left;">Contato</th>
+            <th rowspan="2" style="text-align: center;" class="blue-bg">Ações</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-contatos>
+          <tr>
+            <td class="col-120px">
+              {{contatos.id}}
+            </td>
+            <td>
+              {{contatos.tipoContato}}
+            </td>
+            <td>
+              {{contatos.contato}}
+            </td>
+
+            <td class="col-acoes">
+              <button
+                pButton
+                type="button"
+                (click)="showContatosModalEdit(contatos.id)"
+                icon="pi pi-pencil"
+                style="margin-right:9px;">
+              </button>
+
+              <button
+                pButton
+                type="button"
+                (click)="showContatosModalDelete(contatos.id)"
+                icon="pi pi-trash"
+                class="ui-button-danger">
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+

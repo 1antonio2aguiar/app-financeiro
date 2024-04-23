@@ -1,0 +1,244 @@
+ <!--{{resourceForm.value | json}} -->
+
+<p-panel header="Preencha o Formulario:">
+   <form [formGroup]="resourceForm" (submit)="submitForm()" >
+         <div class="p-grid ui-fluid" style="margin-top: 5px;">
+
+            <div class="p-col-12 p-md-5 p-lg-5" formGroupName="tiposGruposFinanceiros">
+               <label for="tipoGrupoFinanceiro">Grupo financeiro</label>
+               <div class="ui-inputgroup">
+                  <button
+                     pButton
+                     type="button"
+                     label="Buscar"
+                     id="btnTipoGrupoFinanceiro"
+                     (click)="showTiposGruposFinanceiros($event)">
+                  </button>
+                     <span formGroupName="gruposFinanceiros">
+                        <input
+                           id="grupoFinanceiro"
+                           type="text" style="font-weight: bold;"
+                           size="65"
+                           placeholder="Informe o tipo e o grupo financeiro"
+                           pInputText formControlName="descricao"
+                           disabled="true"
+                        >
+                     </span>
+               </div>
+            </div>
+
+            <div class="p-col-12 p-md-4 p-lg-4" formGroupName="tiposGruposFinanceiros">
+               <label for="tipoGrupoFinanceiro">Tipo Grupo Financeiro</label>
+                  <input
+                     id="tipoGrupoFinanceiro"
+                     type="text" style="font-weight: bold;"
+                     size="2"
+                     pInputText formControlName="descricao"
+                     disabled="true"
+                  >
+            </div>
+
+            <div class="p-col-12 p-md-2 p-lg-2" formGroupName="tiposGruposFinanceiros">
+               <span formGroupName="gruposFinanceiros">
+                  <label for="receitaDespesa">Receita/Despesa</label>
+                  <input
+                     id="receitaDespesa"
+                     type="text" style="font-weight: bold;"
+                     size="65"
+                     pInputText formControlName="receitaDespesa"
+                     disabled="true"
+                  >
+               </span>
+            </div>
+
+            <div class="p-col-12 p-md-1 p-lg-1">
+               <label for="nome" >Id</label>
+               <input id="id"
+               type="text"
+               size="10"
+               pInputText formControlName="id"
+               style="font-weight: bold;"
+               disabled="true">
+            </div>
+
+            <div class="p-col-12 p-md-5 p-lg-5" formGroupName="pessoasContratante">
+               <label for="pessoasContratante">Contratante</label>
+               <div class="ui-inputgroup">
+                  <button
+                     pButton
+                     type="button"
+                     label="Buscar"
+                     id="pessoasContratante"
+                     (click)="showPessoaContratante($event)">
+                  </button>
+                  <input
+                     type="text"
+                     style="font-weight: bold"
+                     pInputText
+                     placeholder="Informe contratante"
+                     formControlName="nome"
+                     disabled="true"
+                  />
+               </div>
+            </div>
+
+            <div class="p-col-12 p-md-7 p-lg-7" formGroupName="pessoasContratante">
+               <label for="cpfCnpjContratante">CPF/CNPJ</label>
+               <input
+                  id="cpfCnpjContratante"
+                  type="text" style="font-weight: bold;"
+                  size="2"
+                  pInputText formControlName="cpfCnpj"
+                  disabled="true">
+            </div>
+
+            <div class="p-col-12 p-md-5 p-lg-5" formGroupName="pessoasContratado">
+               <label for="pessoasContratado">Contratando</label>
+               <div class="ui-inputgroup">
+                  <button
+                     pButton
+                     type="button"
+                     label="Buscar"
+                     id="pessoasContratado"
+                     (click)="showPessoaContratado($event)">
+                  </button>
+                  <input
+                     type="text"
+                     style="font-weight: bold"
+                     pInputText
+                     placeholder="Informe contratado"
+                     formControlName="nome"
+                     disabled="true"
+                  />
+               </div>
+            </div>
+
+            <div class="p-col-12 p-md-7 p-lg-7" formGroupName="pessoasContratado">
+               <label for="cpfCnpjContratado">CPF/CNPJ</label>
+               <input
+                  id="cpfCnpjContratado"
+                  type="text" style="font-weight: bold;"
+                  size="2"
+                  pInputText formControlName="cpfCnpj"
+                  disabled="true"/>
+            </div>
+
+            <div class="p-col-12 p-md-2 p-lg-2">
+               <label for="numeroContrato" >Número Contrato</label>
+               <input
+                  id="numeroContrato"
+                  name="numeroContrato"
+                  type="text"
+                  style="font-weight: bold;"
+                  maxlength="15"
+                  pInputText
+                  formControlName="numeroContrato"
+                  (keyup)="nroContratomask()"
+               />
+            </div>
+
+            <div class="p-col-12 p-md-2 p-lg-2">
+               <label for="nome" >Valor Contrato</label>
+               <input
+                  pInputText
+                  type="text"
+                  name="valorContrato"
+                  id="valorContrato"
+                  class="form-control"
+                  formControlName='valorContrato'
+                  maxlength="14"
+                  dir="rtl"
+                  (keyup)="valorContratomask()"
+               />
+            </div>
+
+            <div class="ui-g-2 ui-md-2 ui-fluid">
+               <label for="dataContrato" >Data Contrato</label>
+
+               <p-calendar
+                  name="dataContrato"
+                  id="dataContrato"
+                  dateFormat="dd/mm/yy"
+                  [inline]="false"
+                  [readonlyInput]="false"
+                  [monthNavigator]="true"
+                  [yearNavigator]="true"
+                  yearRange="1920:2030"
+                  [showIcon]="false"
+                  formControlName="dataContrato"
+                  [maxDate]="maxDate"
+                  [locale]="ptBrLocale">
+               </p-calendar>
+            </div>
+
+            <div class="ui-g-2 ui-md-2 ui-fluid">
+               <label for="dataInicio" >Data Início</label>
+
+               <p-calendar
+                  name="dataInicio"
+                  id="dataInicio"
+                  dateFormat="dd/mm/yy"
+                  [inline]="false"
+                  [readonlyInput]="false"
+                  [monthNavigator]="true"
+                  [yearNavigator]="true"
+                  yearRange="1920:2030"
+                  [showIcon]="false"
+                  formControlName="dataInicio"
+                  [maxDate]="maxDate"
+                  [locale]="ptBrLocale">
+               </p-calendar>
+            </div>
+
+            <div class="ui-g-2 ui-md-2 ui-fluid">
+               <label for="dataFim" >Data Fim</label>
+
+               <p-calendar
+                  name="dataFim"
+                  id="dataFim"
+                  dateFormat="dd/mm/yy"
+                  [inline]="false"
+                  [readonlyInput]="false"
+                  [monthNavigator]="true"
+                  [yearNavigator]="true"
+                  yearRange="1920:2030"
+                  [showIcon]="false"
+                  formControlName="dataFim"
+                  [locale]="ptBrLocale">
+               </p-calendar>
+            </div>
+
+            <div class="p-col-12 p-md-2 p-lg-2">
+               <label for="situacao" >Situação</label>
+                  <p-dropdown
+                     id="situacao"
+                     name="situacao"
+                     formControlName="situacao"
+                     placeholder="Selecione"
+                     [options]="situacao">
+                     <ng-template let-option pTemplate="item">
+                        <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
+                     </ng-template>
+                  </p-dropdown>
+            </div>
+
+            <div class="p-col-12 p-md-12 p-lg-12">
+               <label for="observacao" >Observação</label>
+               <input id="observacao" type="text" size="30" pInputText formControlName="observacao">
+            </div>
+         </div>
+
+         <div class="p-grid ui-fluid" style="margin-top: 5px;">
+
+            <div class="p-col-12 p-md-2 p-lg-2">
+               <button pButton type="button" label="Voltar" routerLink="/contratos"  class="ui-button-danger"></button>
+            </div>
+
+            <div class="p-col-12 p-md-2 p-lg-2">
+               <button pButton type="button" [disabled]="submittingForm || resourceForm.invalid" type="submit"
+               icon="pi pi-check" label="Salvar" class="ui-button-success"></button>
+            </div>
+
+         </div>
+   </form>
+</p-panel>

@@ -1,0 +1,64 @@
+<!-- CTRL + SHIFT + F for pretty -->
+<app-bread-crumb
+   [items]="[{ label: 'Estados', routerLink: '/estados' }, { label: pageTitle }]"
+></app-bread-crumb>
+
+<div class="margin">
+   <p-panel header="Preencha o Formulario:">
+      <form [formGroup]="resourceForm" (submit)="submitForm()">
+         <div class="p-grid ui-fluid" style="margin-top: 5px">
+            <div class="p-col-12 p-md-1 p-lg-1">
+               <label for="id">ID</label>
+               <input id="id" type="text" disabled style="text-align: center;" pInputText formControlName="id" />
+               <app-form-field-error
+                  [form-control]="resourceForm.get('id')"
+                  header-colum="Id"
+               ></app-form-field-error>
+            </div>
+
+            <div class="p-col-12 p-md-4 p-lg-4">
+               <label for="nome">Nome</label>
+               <input id="nome" type="text" size="50" pInputText formControlName="nome" />
+               <app-form-field-error
+                  [form-control]="resourceForm.get('nome')"
+                  header-colum="Nome"
+               ></app-form-field-error>
+            </div>
+
+            <div class="p-col-12 p-md-1 p-lg-1">
+               <label for="uf">UF</label>
+               <input id="uf" type="text" style="text-align: center;" size="30" pInputText formControlName="uf" />
+               <app-form-field-error
+                  [form-control]="resourceForm.get('uf')"
+                  header-colum="UF"
+                  alig
+               ></app-form-field-error>
+            </div>
+         </div>
+
+         <div class="p-grid ui-fluid" style="margin-top: 5px">
+            <div class="p-col-12 p-md-2 p-lg-2">
+               <button
+                  pButton
+                  type="button"
+                  label="Voltar"
+                  routerLink="/estados"
+                  class="ui-button-danger"
+               ></button>
+            </div>
+
+            <div class="p-col-12 p-md-2 p-lg-2">
+               <button
+                  pButton
+                  type="button"
+                  [disabled]="submittingForm || resourceForm.invalid"
+                  type="submit"
+                  icon="pi pi-check"
+                  label="Salvar"
+                  class="ui-button-success"
+               ></button>
+            </div>
+         </div>
+      </form>
+   </p-panel>
+</div>

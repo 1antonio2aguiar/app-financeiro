@@ -1,0 +1,1 @@
+INSERT INTO pessoas(nome,tipo_pessoa,cpf_cnpj,data_nascimento,observacao) VALUES ('JOSÉ JOAQUIM','F','999.999.999-99','1985-09-15','TESTE');

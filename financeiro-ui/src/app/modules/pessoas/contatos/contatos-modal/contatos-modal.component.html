@@ -1,0 +1,53 @@
+<p-panel [header]="dadosPessoa">
+
+   <!--{{resourceForm.value | json}} -->
+
+   <form [formGroup]="resourceForm" (submit)="submitForm()" >
+
+      <div class="p-grid ui-fluid" style="margin-top: 5px;">
+
+         <div class="p-col-12 p-md-12 p-lg-12">
+            <label for="tipoContatoDdw" >Tipo Contato</label>
+            <p-dropdown
+               id="tipoContatoDdw"
+               name="tipoContatoDdw"
+               [options]="tiposContatosList"
+               placeholder="Selecione"
+               [filter]="false"
+               [disabled]="env.botaoOnOf"
+               formControlName="tipoContato">
+               <app-form-field-error [form-control]="resourceForm.get('tipoContato')"
+                  header-colum="Tipo Contato"></app-form-field-error>
+            </p-dropdown>
+         </div>
+
+         <div class="p-col-12 p-md-12 p-lg-12">
+            <label for="contato">Contato</label>
+            <input id="contato" type="text" size="10" pInputText formControlName="contato">
+            <app-form-field-error [form-control]="resourceForm.get('contato')" header-colum="Contato"></app-form-field-error>
+         </div>
+      </div>
+
+      <div class="p-grid ui-fluid" style="margin-top: 5px;">
+
+         <div class="p-col-12 p-md-2 p-lg-2">
+            <button pButton
+            type="button"
+            label="Cancelar" class="ui-button-danger"
+            (click)="fecharModal()">
+            </button>
+         </div>
+
+         <div *ngIf="env.currentActionGlobal != 'DELETE'" class="p-col-12 p-md-2 p-lg-2">
+            <button pButton type="button" [disabled]="submittingForm || resourceForm.invalid" type="submit"
+            icon="pi pi-check" id="btnSalvar" value="Salvar" label="Salvar" class="ui-button-success"></button>
+         </div>
+
+         <div *ngIf="env.currentActionGlobal === 'DELETE'" class="p-col-12 p-md-2 p-lg-2">
+            <button pButton type="button" [disabled]="submittingForm || resourceForm.invalid" type="submit"
+            icon="pi pi-check" id="btnSalvar" value="Salvar" label="Sim" class="ui-button-success"></button>
+         </div>
+
+      </div>
+   </form>
+</p-panel>

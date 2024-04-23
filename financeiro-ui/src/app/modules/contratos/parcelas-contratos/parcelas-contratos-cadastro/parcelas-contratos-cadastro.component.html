@@ -1,0 +1,178 @@
+<p-panel [header]="dadosContrato">
+
+   <!-- {{resourceForm.value | json}} -->
+
+   <form [formGroup]="resourceForm" (submit)="submitForm()" >
+
+      <div class="p-grid ui-fluid" style="margin-top: 5px;">
+         <div class="p-col-12 p-md-5 p-lg-5">
+            <label for="grupoFinanceiro" >Grupo Financeiro</label>
+            <input id="grupoFinanceiro" [value]="grupoFinanceiro" pInputText disabled="true" type="text">
+         </div>
+
+         <div class="p-col-12 p-md-5 p-lg-5">
+            <label for="tipoGrupoFinanceiro" >Tipo Grupo Financeiro</label>
+            <input id="tipoGrupoFinanceiro" [value]="tipoGrupoFinanceiro" pInputText disabled="true" type="text">
+         </div>
+
+         <div class="p-col-12 p-md-2 p-lg-2">
+            <label for="grupoFinanceiro" >Receita/Despesa</label>
+            <input id="grupoFinanceiro" [value]="receitaDespesa" pInputText disabled="true" type="text">
+         </div>
+
+         <div class="p-col-12 p-md-12 p-lg-12">
+            <div class="p-col-12 p-md-1 p-lg-1">
+               <label for="parcela">Parcela</label>
+               <input id="parcela" type="text" class="col-input" size="5" disabled="true" pInputText formControlName="parcela">
+               <app-form-field-error [form-control]="resourceForm.get('parcela')" header-colum="Parcela é"></app-form-field-error>
+            </div>
+         </div>
+
+         <div class="p-col-12 p-md-2 p-lg-2 clas-div">
+            <label for="valor">Valor</label>
+            <input id="valor" maxlength="14" dir="rtl" type="text" pInputText formControlName="valor"
+               (keyup)="valorMask()"
+               onClick="this.focus();this.select()"
+            >
+            <app-form-field-error [form-control]="resourceForm.get('valor')" header-colum="Valor é"></app-form-field-error>
+         </div>
+
+         <div class="p-col-12 p-md-2 p-lg-2 clas-div">
+            <label for="juros">Juros</label>
+            <input id="juros" maxlength="14" dir="rtl" type="text" pInputText formControlName="juros"
+               (keyup)="jurosMask()"
+               onClick="this.focus();this.select()"
+            >
+         </div>
+
+         <div class="p-col-12 p-md-2 p-lg-2 clas-div">
+            <label for="multa">Multa</label>
+            <input id="multa" maxlength="14" dir="rtl" type="text" pInputText formControlName="multa"
+               (keyup)="multaMask()"
+               onClick="this.focus();this.select()"
+            >
+         </div>
+
+         <div class="p-col-12 p-md-2 p-lg-2 clas-div">
+            <label for="correcao">Correção</label>
+            <input id="correcao" maxlength="14" dir="rtl" type="text" pInputText formControlName="correcao"
+               (keyup)="correcaoMask()"
+               onClick="this.focus();this.select()"
+            >
+         </div>
+
+         <div class="p-col-12 p-md-2 p-lg-2 clas-div">
+            <label for="desconto">Desconto</label>
+            <input id="desconto" maxlength="14" dir="rtl" type="text" pInputText formControlName="desconto"
+               (keyup)="descontoMask()"
+               onClick="this.focus();this.select()"
+            >
+         </div>
+
+         <div class="p-col-12 p-md-2 p-lg-2 clas-div">
+            <label for="valorPago">Total</label>
+            <input id="valorPago" maxlength="14" dir="rtl" disabled="true" type="text" pInputText formControlName="valorPago"
+               (keyup)="valorPagoMask()"
+               onClick="this.focus();this.select()"
+            >
+         </div>
+
+         <div class="ui-g-2 ui-md-2 ui-fluid">
+            <label for="dataContrato" >Data Vencimento</label>
+
+            <p-calendar
+               name="dataVencimento"
+               id="dataVencimento"
+               dateFormat="dd/mm/yy"
+               [inline]="false"
+               [readonlyInput]="false"
+               [monthNavigator]="true"
+               [yearNavigator]="true"
+               yearRange="1920:2030"
+               [showIcon]="false"
+               formControlName="dataVencimento"
+               [locale]="ptBrLocale"
+               [ngClass]="{'back-disable': isDisabledDatas}"
+            >
+            </p-calendar>
+            <!--<app-form-field-error [form-control]="resourceForm.get('dataVencimento')" header-colum="Data Vencimento é"></app-form-field-error> -->
+         </div>
+
+         <div class="ui-g-2 ui-md-2 ui-fluid">
+            <label for="dataPagamento" >Data Pagamento</label>
+
+            <p-calendar
+               name="dataPagamento"
+               id="dataPagamento"
+               dateFormat="dd/mm/yy"
+               [inline]="false"
+               [readonlyInput]="false"
+               [monthNavigator]="true"
+               [yearNavigator]="true"
+               yearRange="1920:2030"
+               [showIcon]="false"
+               [maxDate]="maxDate"
+               formControlName="dataPagamento"
+               (onBlur)="somaVlrs($event)"
+               [ngClass]="{'back-disable': isDisabledDatas}"
+            >
+            </p-calendar>
+         </div>
+
+         <!--<div class="p-col-12 p-md-6 p-lg-6" formGroupName="bancos">
+            <label for="Banco">Banco</label>
+            <div class="ui-inputgroup">
+               <button
+                  pButton
+                  type="button"
+                  label="Buscar"
+                  id="btnBanco"
+                  >
+               </button>
+               <span formGroupName="bancos">
+                  <input
+                     id="banco"
+                     type="text" style="font-weight: bold;"
+                     size="65"
+                     placeholder="Informe banco e agencia"
+                     pInputText formControlName="nome"
+                     disabled="true"
+                  >
+               </span>
+            </div>
+         </div> -->
+
+         <div class="p-col-12 p-md-8 p-lg-8">
+            <label for="documento" >Documento</label>
+            <input id="documento" pInputText type="text" formControlName="documento">
+         </div>
+
+         <div class="p-col-12 p-md-12 p-lg-12">
+            <label for="observacao" >Observação</label>
+            <input id="observacao" pInputText type="text" formControlName="observacao">
+         </div>
+      </div>
+
+      <div class="p-grid ui-fluid" style="margin-top: 5px;">
+
+         <div class="p-col-12 p-md-2 p-lg-2">
+            <button pButton
+            type="button"
+            label="Cancelar" class="ui-button-danger"
+            (click)="fecharModal()">
+            </button>
+         </div>
+
+         <div *ngIf="env.currentActionGlobal != 'DELETE'" class="p-col-12 p-md-2 p-lg-2">
+            <button pButton type="button" [disabled]="submittingForm || resourceForm.invalid" type="submit"
+            icon="pi pi-check" id="btnSalvar" value="Salvar" label="Salvar" class="ui-button-success"></button>
+         </div>
+
+         <div *ngIf="env.currentActionGlobal === 'DELETE'" class="p-col-12 p-md-2 p-lg-2">
+            <button pButton type="button" [disabled]="submittingForm || resourceForm.invalid" type="submit"
+            icon="pi pi-check" id="btnSalvar" value="Salvar" label="Sim" class="ui-button-success"></button>
+         </div>
+
+      </div>
+   </form>
+</p-panel>

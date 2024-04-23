@@ -1,0 +1,168 @@
+<!-- CTRL + SHIFT + F for pretty -->
+<app-bread-crumb
+   [items]="[{ label: 'Ceps', routerLink: '/ceps' }, { label: pageTitle }]"
+></app-bread-crumb>
+
+<div class="margin">
+   <p-panel header="Preencha o Formulario:">
+
+      <form [formGroup]="resourceForm" (submit)="submitForm()">
+         <div class="p-grid ui-fluid" style="margin-top: 5px">
+            <div class="p-col-12 p-md-10 p-lg-10" formGroupName="cidades">
+               <label for="cidade">Cidade</label>
+               <div class="ui-inputgroup">
+                  <button
+                     [disabled]="botaoOnOf"
+                     pButton
+                     type="button"
+                     label="Buscar"
+                     (click)="showCidades($event)"
+                  ></button>
+                  <input
+                     type="text"
+                     style="font-weight: bold"
+                     pInputText
+                     placeholder="Informe a cidade"
+                     formControlName="nome"
+                     disabled="true"
+                  />
+               </div>
+            </div>
+
+            <div class="p-col-12 p-md-2 p-lg-2" formGroupName="cidades">
+               <label for="sigla">Estado</label>
+               <span formGroupName="estados">
+                  <input
+                     id="nome"
+                     type="text"
+                     style="font-weight: bold"
+                     size="2"
+                     pInputText
+                     formControlName="nome"
+                     disabled="true"
+                  />
+               </span>
+            </div>
+
+            <div class="p-col-12 p-md-12 p-lg-12" formGroupName="bairros">
+               <label for="cidade">Bairro</label>
+               <div class="ui-inputgroup">
+                  <button
+                     [disabled]="botaoOnOf"
+                     pButton
+                     type="button"
+                     label="Buscar"
+                     (click)="showBairros($event)"
+                  ></button>
+                  <input
+                     type="text"
+                     style="font-weight: bold"
+                     pInputText
+                     placeholder="Informe o bairro"
+                     formControlName="nome"
+                     disabled="true"
+                  />
+               </div>
+            </div>
+
+            <div class="p-col-12 p-md-2 p-lg-2" formGroupName="logradouros">
+               <label for="cidade">Logradouro</label>
+               <div class="ui-inputgroup">
+                  <button
+                     [disabled]="botaoOnOf"
+                     pButton
+                     type="button"
+                     label="Buscar"
+                     (click)="showLogradouros($event)"
+                  ></button>
+                  <span formGroupName="tiposLogradouros">
+                  <input
+                     type="text"
+                     style="font-weight: bold"
+                     pInputText
+                     formControlName="sigla"
+                     disabled="true"
+                  />
+               </span>
+               </div>
+            </div>
+
+            <div class="p-col-12 p-md-10 p-lg-10" formGroupName="logradouros">
+               <label for="nome">.  </label>
+                  <input
+                     id="nome"
+                     type="text"
+                     style="font-weight: bold"
+                     size="2"
+                     pInputText
+                     formControlName="nome"
+                     disabled="true"
+                  />
+            </div>
+
+            <div class="p-col-12 p-md-6 p-lg-6">
+               <label for="cep">C.E.P</label>
+               <input
+                  placeholder="Informe o CEP"
+                  [imask]="masks"
+                  [unmask]="true"
+                  id="cep"
+                  type="text"
+                  size="20"
+                  pInputText
+                  formControlName="cep"
+                  style="font-weight: bold"
+               />
+               <app-form-field-error
+                  [form-control]="resourceForm.get('cep')"
+                  header-colum="cep"
+               ></app-form-field-error>
+            </div>
+
+            <div class="p-col-12 p-md-2 p-lg-2">
+               <label for="numeroIni">Número Inicial</label>
+               <input id="numeroIni" type="text" size="20" pInputText formControlName="numeroIni" />
+            </div>
+
+            <div class="p-col-12 p-md-2 p-lg-2">
+               <label for="numeroFin'">Número Final</label>
+               <input id="numeroFin" type="text" size="20" pInputText formControlName="numeroFin" />
+            </div>
+
+            <div class="p-col-12 p-md-2 p-lg-2">
+               <label for="identificacao">Identificação</label>
+               <p-dropdown
+                  id="identificacao"
+                  name="identificacao"
+                  formControlName="identificacao"
+                  [options]="identificacao"
+               ></p-dropdown>
+            </div>
+         </div>
+
+         <div class="p-grid ui-fluid" style="margin-top: 5px">
+            <div class="p-col-12 p-md-2 p-lg-2">
+               <button
+                  pButton
+                  type="button"
+                  label="Voltar"
+                  routerLink="/ceps"
+                  class="ui-button-danger"
+               ></button>
+            </div>
+
+            <div class="p-col-12 p-md-2 p-lg-2">
+               <button
+                  pButton
+                  type="button"
+                  [disabled]="submittingForm || resourceForm.invalid"
+                  type="submit"
+                  icon="pi pi-check"
+                  label="Salvar"
+                  class="ui-button-success"
+               ></button>
+            </div>
+         </div>
+      </form>
+   </p-panel>
+</div>

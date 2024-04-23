@@ -1,0 +1,110 @@
+<app-bread-crumb [items]="[{label: 'Parcelas do Contrato'}]"></app-bread-crumb>
+
+<div class="margin">
+   
+   <div class="p-col-12 p-md-12 p-lg-12">
+      <app-page-header
+         page-title="Parcelas Contratos"
+         button-text="+"
+         button-class="btn-success"
+         (click)="showParcelasContratosModalNew($event)" >
+      </app-page-header>
+   </div>
+
+   <div class="p-grid ui-fluid" style="margin-top: 5px;">
+      <div class="p-col-12 p-md-2 p-lg-2">
+         <label for="grupoFinanceiro" >Receita/Despesa</label>
+         <input id="grupoFinanceiro" [value]="receitaDespesa" pInputText disabled="true" type="text">
+      </div>
+
+      <div class="p-col-12 p-md-5 p-lg-5">
+         <label for="grupoFinanceiro" >Grupo Financeiro</label>
+         <input id="grupoFinanceiro" [value]="grupoFinanceiro" pInputText disabled="true" type="text">
+      </div>
+
+      <div class="p-col-12 p-md-5 p-lg-5">
+         <label for="tipoGrupoFinanceiro" >Tipo Grupo Financeiro</label>
+         <input id="tipoGrupoFinanceiro" [value]="tipoGrupoFinanceiro" pInputText disabled="true" type="text">
+      </div>
+   </div>
+
+  <div class="p-grid ui-fluid">
+    <div class="p-col-12 p-md-12 p-lg-12">
+      <p-table #tabela [loading]="loading" [responsive]="true" [value]="resources['content']" [paginator]="true"
+         [rows]="filtro.itensPorPagina" [lazy]="true" [totalRecords]="filtro.totalRegistros"
+         (onLazyLoad)="aoMudarPagina($event)" [autoLayout]="true">
+
+         <ng-template pTemplate="header">
+            <tr>
+               <th class="blue-bg col-60px">Parcela</th>
+               <th class="blue-bg col-data">Vencimento</th>
+               <th class="blue-bg col-data">Pagamento</th>
+               <th class="blue-bg col-moeda">Valor</th>
+               <!--<th class="blue-bg col-moeda">Juros</th>
+               <th class="blue-bg col-moeda">Multa</th>
+               <th class="blue-bg col-moeda">Correção</th> -->
+               <th class="blue-bg col-moeda">Desconto</th>
+               <th class="blue-bg col-moeda">Valor Pago</th>
+               <th class="blue-bg">Observação</th>
+               <th rowspan="2" style="text-align: center;" class="blue-bg">Ações</th>
+            </tr>
+         </ng-template>
+
+         <ng-template pTemplate="body" let-parcelasContratos>
+            <tr>
+               <td class="col-60px">
+                  {{parcelasContratos.parcela}}
+               </td>
+               <td class="col-data">
+                  {{ parcelasContratos.dataVencimento | date : 'dd/MM/yyyy' }}
+               </td>
+               <td class="col-data">
+                  {{ parcelasContratos.dataPagamento | date : 'dd/MM/yyyy' }}
+               </td>
+               <td class="col-moeda">
+                  {{parcelasContratos.valor | currency}}
+               </td>
+               <!-- <td class="col-moeda">
+                  {{parcelasContratos.juros | currency}}
+               </td>
+               <td class="col-moeda">
+                  {{parcelasContratos.multa | currency}}
+               </td>
+               <td class="col-moeda">
+                  {{parcelasContratos.correcao| currency}}
+               </td> -->
+               <td class="col-moeda">
+                  {{parcelasContratos.desconto| currency}}
+               </td>
+               <td class="col-moeda">
+                  {{parcelasContratos.valorPago| currency}}
+               </td>
+               <td>
+                  {{ parcelasContratos.observacao }}
+               </td>
+
+               <td class="col-acoes">
+                  <button
+                     pButton
+                     type="button"
+                     (click)="showParcelasContratosModalEdit(parcelasContratos.id)"
+                     icon="pi pi-pencil"
+                     style="margin-right:9px;">
+                  </button>
+
+                  <button
+                     pButton
+                     type="button"
+                     (click)="showParcelasContratosModalDelete(parcelasContratos.id)"
+                     icon="pi pi-trash"
+                     class="ui-button-danger">
+                  </button>
+               </td>
+            </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+

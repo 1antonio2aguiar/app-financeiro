@@ -1,0 +1,165 @@
+<!-- CTRL + SHIFT + F for pretty -->
+<!-- <app-bread-crumb [items]="[{label: 'Pessoas', routerLink:'/pessoas'}, {label: pageTitle}]"></app-bread-crumb> -->
+
+ <!--{{resourceForm.value | json}} -->
+
+<p-panel header="Preencha o Formulario:">
+
+ <form [formGroup]="resourceForm" (submit)="submitForm()" >
+
+   <div class="p-grid ui-fluid" style="margin-top: 5px;">
+
+      <div class="p-col-12 p-md-1 p-lg-1">
+         <label for="nome" >Id</label>
+         <input id="id"
+         type="text"
+         size="10"
+         pInputText formControlName="id"
+         style="font-weight: bold;"
+         disabled="true">
+      </div>
+
+      <div class="p-col-12 p-md-9 p-lg-9">
+         <label for="nome" >Nome</label>
+         <input id="nome" type="text" size="80" pInputText formControlName="nome">
+         <app-form-field-error [form-control]="resourceForm.get('nome')" header-colum="Nome"></app-form-field-error>
+      </div>
+
+      <div class="p-col-12 p-md-2 p-lg-2">
+         <label for="zonaRural">Física Jurídica</label>
+         <p-selectButton
+            id="fisicaJuridica"
+            name="fisicaJuridica"
+            [options]="fisicaJuridica"
+            formControlName="fisicaJuridica"
+            (onChange)="onChange($event)"
+            [disabled]="botaoOnOf">
+         </p-selectButton>
+      </div>
+
+      <div class="p-col-12 p-md-3 p-lg-3">
+         <label for="cpfCnpj">
+            <span *ngIf="resourceForm.value.fisicaJuridica == 'J'">CNPJ</span>
+            <span *ngIf="resourceForm.value.fisicaJuridica == 'F'">CPF</span>
+            <span *ngIf="resourceForm.value.fisicaJuridica == null">Informe se é pessoa Fisíca ou Jurídica</span>
+         </label>
+
+         <input
+            id="cpfCnpj"
+            name="cpfCnpj"
+            type="text"
+            style="font-weight: bold;"
+            size="18"
+            pInputText formControlName="cpfCnpj"
+            [ngClass]="{'back-disable': isDisabledFild}"
+            (keyup)="cpfcnpjmask()">
+      </div>
+
+
+      <div class="ui-g-3 ui-md-3 ui-fluid">
+         <label for="dataRegistro">
+            <span *ngIf="resourceForm.value.fisicaJuridica == 'J'">Data Registro</span>
+            <span *ngIf="resourceForm.value.fisicaJuridica == 'F'">Data Nascimento</span>
+            <span *ngIf="resourceForm.value.fisicaJuridica == null">.</span>
+         </label>
+
+         <p-calendar
+            name="dataRegistro"
+            id="dataRegistro"
+            dateFormat="dd/mm/yy"
+            [inline]="false"
+            [readonlyInput]="false"
+            [monthNavigator]="true"
+            [yearNavigator]="true"
+            yearRange="1920:2030"
+            [showIcon]="false"
+            formControlName="dataRegistro"
+            [maxDate]="maxDate"
+            [locale]="ptBrLocale">
+         </p-calendar>
+      </div>
+
+      <div class="p-col-12 p-md-4 p-lg-4">
+         <label for="estadoCivil" >Estado Cívil</label>
+         <p-dropdown
+            id="estadoCivil"
+            name="estadoCivil"
+            formControlName="estadoCivil"
+            placeholder="Selecione"
+            [options]="estadoCivil"
+            [disabled]="resourceForm.value.fisicaJuridica == 'J'">
+         </p-dropdown>
+      </div>
+
+      <div class="p-col-12 p-md-2 p-lg-2">
+         <label for="genero">Genero</label>
+         <p-selectButton
+            id="genero"
+            name="genero"
+            [options]="genero"
+            formControlName="genero"
+            [disabled]="resourceForm.value.fisicaJuridica == 'J'"
+            >
+         </p-selectButton>
+      </div>
+
+      <div class="p-col-12 p-md-12 p-lg-12">
+         <label for="nomeFantasia" >Nome Fantasia</label>
+         <input
+         id="nomeFantasia"
+         type="text"
+         size="100"
+         pInputText
+         disabled="true"
+         [ngClass]="{'back-disable': isDisabledFild}"
+         formControlName="nomeFantasia">
+      </div>
+
+      <div class="p-col-12 p-md-12 p-lg-12">
+         <label for="objetoSocial" >Objeto Social</label>
+         <input
+            id="objetoSocial"
+            type="text"
+            size="100"
+            pInputText
+            [ngClass]="{'back-disable': isDisabledFild}"
+            formControlName="objetoSocial"
+            disabled="true">
+      </div>
+
+      <div class="p-col-12 p-md-10 p-lg-10">
+         <label for="observacao" >Observação</label>
+         <input id="observacao" type="text" size="30" pInputText formControlName="observacao">
+      </div>
+
+      <div class="p-col-12 p-md-2 p-lg-2">
+         <label for="situacao" >Situação</label>
+            <p-dropdown
+               id="situacao"
+               name="situacao"
+               formControlName="situacao"
+               placeholder="Selecione"
+               [options]="situacao">
+               <ng-template let-option pTemplate="item">
+                  <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
+               </ng-template>
+            </p-dropdown>
+      </div>
+
+   </div>
+
+   <div class="p-grid ui-fluid" style="margin-top: 5px;">
+
+      <div class="p-col-12 p-md-2 p-lg-2">
+         <button pButton type="button" label="Voltar" routerLink="/pessoas"  class="ui-button-danger"></button>
+      </div>
+
+      <div class="p-col-12 p-md-2 p-lg-2">
+         <button pButton type="button" [disabled]="submittingForm || resourceForm.invalid" type="submit"
+         icon="pi pi-check" label="Salvar" class="ui-button-success"></button>
+      </div>
+
+   </div>
+
+ </form>
+</p-panel>

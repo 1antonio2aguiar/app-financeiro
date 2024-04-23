@@ -1,0 +1,108 @@
+<!-- CTRL + SHIFT + F for pretty -->
+<app-bread-crumb [items]="[{ label: 'Grupos Financeiros' }]"></app-bread-crumb>
+
+<div class="margin">
+   <p-toast></p-toast>
+
+   <div class="p-col-12 p-md-12 p-lg-12">
+      <app-page-header page-title="Grupos Financeiros" button-text="+" button-link="new"
+      button-class="btn-success"></app-page-header>
+   </div>
+
+   <div class="p-grid ui-fluid">
+      <div class="p-col-12 p-md-12 p-lg-12">
+         <p-table
+            #tabela
+            [loading]="loading"
+            [responsive]="true"
+            [value]="resources"
+            [paginator]="true"
+            [rows]="filtro.itensPorPagina"
+            [lazy]="true"
+            [totalRecords]="filtro.totalRegistros"
+            (onLazyLoad)="aoMudarPagina($event)"
+            [autoLayout]="true"
+         >
+            <ng-template pTemplate="header">
+               <tr>
+                  <th class="blue-bg col-120px">Id</th>
+                  <th class="blue-bg col-120px">Receita/Despesa</th>
+                  <th class="blue-bg">Descrição</th>
+                  <th rowspan="2" style="text-align: center" class="blue-bg">Ações</th>
+               </tr>
+
+               <tr>
+                  <th class="ui-fluid col-120px">
+                     <input
+                        style="text-align: center;"
+                        pInputText
+                        type="text"
+                        name="id"
+                        (input)="tabela.filter($event.target.value, 'id', 'equals')"
+                     />
+                  </th>
+                  <th class="ui-fluid col-120px">
+                     <input
+                        pInputText
+                        type="text"
+                        name="receitaDespesa"
+                        (input)="tabela.filter($event.target.value, 'receitaDespesa', 'equals')"
+                     />
+                  </th>
+                  <th class="ui-fluid">
+                     <input
+                        pInputText
+                        type="text"
+                        name="descricao"
+                        (input)="tabela.filter($event.target.value, 'descricao', 'equals')"
+                     />
+                  </th>
+               </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-gruposFinanceiros>
+               <tr>
+                  <td class="col-120px">
+                     {{ gruposFinanceiros.id }}
+                  </td>
+                  <td class="col-120px">
+                     {{ gruposFinanceiros.receitaDespesa }}
+                  </td>
+                  <td>
+                     {{ gruposFinanceiros.descricao }}
+                  </td>
+
+                  <td class="col-acoes">
+                     <button
+                        pButton
+                        type="button"
+                        [routerLink]="[gruposFinanceiros.id, 'edit']"
+                        icon="pi pi-pencil"
+                        style="margin-right: 9px"
+                     ></button>
+
+                     <button
+                        pButton
+                        type="button"
+                        (click)="deleteResource(gruposFinanceiros)"
+                        icon="pi pi-trash"
+                        class="ui-button-danger"
+                     ></button>
+                  </td>
+               </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+               <tr>
+                  <td colspan="6">Nenhum registro cadastrado!</td>
+               </tr>
+            </ng-template>
+         </p-table>
+      </div>
+   </div>
+</div>
+
+<app-base-resource-confirmation
+   header="Atenção"
+   menssage="Deseja realmente deletar este item ?"
+></app-base-resource-confirmation>

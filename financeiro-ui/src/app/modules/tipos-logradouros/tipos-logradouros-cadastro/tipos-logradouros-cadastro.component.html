@@ -1,0 +1,47 @@
+<!-- CTRL + SHIFT + F for pretty -->
+<app-bread-crumb [items]="[{label: 'Tipos Logradouros', routerLink:'/tipos-logradouros'}, {label: pageTitle}]"></app-bread-crumb>
+
+<div class="margin">
+
+  <p-panel header="Preencha o Formulario:">
+
+    <form [formGroup]="resourceForm" (submit)="submitForm()" >
+
+      <div class="p-grid ui-fluid" style="margin-top: 5px;">
+        <div class="p-col-12 p-md-1 p-lg-1">
+	  			<label for="id" >Id</label>
+	  			<input id="id" type="text" disabled style="text-align: center;" size="5" pInputText formControlName="id">
+  			<app-form-field-error [form-control]="resourceForm.get('id')" header-colum="Id"></app-form-field-error>
+			</div>
+
+			<div class="p-col-12 p-md-5 p-lg-5">
+	  			<label for="descricao" >Descricao</label>
+	  			<input id="descricao" type="text" size="30" pInputText formControlName="descricao">
+  				<app-form-field-error [form-control]="resourceForm.get('descricao')" header-colum="Descricao"></app-form-field-error>
+			</div>
+
+			<div class="p-col-12 p-md-1 p-lg-1">
+	  			<label for="sigla" >Sigla</label>
+	  			<input id="sigla" type="text" size="30" pInputText formControlName="sigla">
+  				<app-form-field-error [form-control]="resourceForm.get('sigla')" header-colum="Sigla"></app-form-field-error>
+			</div>
+
+      </div>
+
+      <div class="p-grid ui-fluid" style="margin-top: 5px;">
+
+
+          <div class="p-col-12 p-md-2 p-lg-2">
+              <button pButton type="button" label="Voltar" routerLink="/tipos-logradouros"  class="ui-button-danger"></button>
+            </div>
+
+          <div class="p-col-12 p-md-2 p-lg-2">
+            <button pButton type="button" [disabled]="submittingForm || resourceForm.invalid" type="submit"
+            icon="pi pi-check" label="Salvar" class="ui-button-success"></button>
+          </div>
+
+      </div>
+
+    </form>
+  </p-panel>
+</div>

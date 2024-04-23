@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { HttpParams } from '@angular/common/http';\nexport class TiposLogradourosFiltro {\n  constructor() {\n    this.pagina = 0;\n    this.itensPorPagina = 11;\n    this.totalRegistros = 0;\n    this.params = new HttpParams();\n  }\n}","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

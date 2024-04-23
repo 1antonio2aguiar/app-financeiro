@@ -1,0 +1,131 @@
+<!-- CTRL + SHIFT + F for pretty -->
+
+<app-bread-crumb [items]="[{label: 'Consulta Pessoas'}]"></app-bread-crumb>
+
+<div class="margin">
+   <p-toast></p-toast>
+
+   <div class="p-col-12 p-md-12 p-lg-12">
+      <app-page-header page-title="Pessoas" button-text="+" button-link="new" button-class="btn-success"></app-page-header>
+   </div>
+
+   <div class="p-grid ui-fluid">
+      <div class="p-col-12 p-md-12 p-lg-12">
+         <p-table #tabela [loading]="loading" [responsive]="true" [value]="resources" [paginator]="true"
+            [rows]="filtro.itensPorPagina" [lazy]="true" [totalRecords]="filtro.totalRegistros"
+            (onLazyLoad)="aoMudarPagina($event)" [autoLayout]="true">
+
+         <ng-template pTemplate="header">
+            <tr>
+               <th class="blue-bg col-120px">Id</th>
+               <th class="blue-bg">Nome</th>
+               <th class="blue-bg col-200px">CPF/CNPJ</th>
+               <th class="blue-bg col-120px">Data Registro</th>
+               <th class="blue-bg col-120px">Situação</th>
+               <th rowspan="2" style="text-align: center;" class="blue-bg">Ações</th>
+            </tr>
+
+            <tr>
+               <th class="ui-fluid col-120px">
+               <input style="text-align: center;" pInputText type="text" name="id" (input)="tabela.filter($event.target.value, 'id', 'equals')" >
+            </th>
+
+            <th class="ui-fluid">
+               <input pInputText type="text" name="nome" (input)="tabela.filter($event.target.value, 'nome', 'equals')" >
+            </th>
+
+            <th class="ui-fluid col-200px">
+               <input pInputText type="text" name="cpfCnpj" (input)="tabela.filter($event.target.value, 'cpfCnpj', 'equals')" >
+            </th>
+
+            <th class="ui-fluid col-120px">
+               <input
+                   pInputText
+                   type="text"
+                   name="dataRegistro"
+                   [imask]="dataRegistroMsk"
+                   [unmask]="true"
+                   (input)="tabela.filter($event.target.value, 'dataRegistro', 'equals')"
+               />
+            </th>
+
+            <th class="ui-fluid">
+               <p-dropdown 
+                     [options]="situacao" 
+                     (onChange)="tabela.filter($event.value, 'situacao', 'equals')"
+                     placeholder="Selecione" [showClear]="true">
+                     <ng-template let-option pTemplate="item">
+                        <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
+                     </ng-template>
+               </p-dropdown>
+            </th>
+
+            
+         </ng-template>
+
+         <ng-template pTemplate="body" let-pessoas>
+            <tr>
+               <td class="col-120px">
+                  {{pessoas.id}}
+               </td>
+
+               <td>
+                  {{pessoas.nome}}
+               </td>
+
+               <td class="col-200px">
+                  <span *ngIf="pessoas.fisicaJuridica === 'F'">
+                     {{pessoas.cpfCnpj | cpf}}
+                  </span>
+                  <span *ngIf="pessoas.fisicaJuridica=== 'J'">
+                     {{pessoas.cpfCnpj | cnpj}}
+                  </span>
+               </td>
+
+               <td class="col-120px" style="text-align: center">
+                  {{pessoas.dataRegistro | date:"dd/MM/yyyy"}}
+               </td>
+
+               <td class="col-120px">
+                  <span *ngIf="pessoas.situacao === 1">
+                     {{"ATIVO"}}
+                  </span>
+                  <span *ngIf="pessoas.situacao === 2">
+                     {{"INATIVO"}}
+                  </span>
+                  <span *ngIf="pessoas.situacao === 3">
+                     {{"PARALISADO"}}
+                  </span>
+                  <span *ngIf="pessoas.situacao === 4">
+                     {{"SUSPENSO"}}
+                  </span>
+               </td>
+
+               <td class="col-acoes">
+               <button pButton type="button" [routerLink]="[pessoas.id, 'edit']" icon="pi pi-pencil"
+                  style="margin-right:9px;"></button>
+
+                  <button pButton type="button" (click)="deleteResource(pessoas)" icon="pi pi-trash"
+                class="ui-button-danger"></button>
+
+               </td>
+
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+               <td colspan="6">
+                  Nenhum registro cadastrado!
+               </td>
+            </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<app-base-resource-confirmation
+   header="Atenção"
+   menssage="Deseja realmente deletar este item ?"
+></app-base-resource-confirmation>

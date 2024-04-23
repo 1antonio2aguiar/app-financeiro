@@ -1,0 +1,79 @@
+<app-bread-crumb [items]="[{label: 'Documentos'}]"></app-bread-crumb>
+
+<div class="margin">
+
+  <div class="p-col-12 p-md-12 p-lg-12">
+    <app-page-header
+      page-title="Documentos"
+      button-text="+"
+      button-class="btn-success"
+      (click)="showDocumentosModalNew($event)" >
+    </app-page-header>
+  </div>
+
+  <div class="p-grid ui-fluid">
+    <div class="p-col-12 p-md-12 p-lg-12">
+      <p-table #tabela [responsive]="true" [paginator]="false" [lazy]="true" [autoLayout]="true"
+      [value]="resources">
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="blue-bg col-120px">Id</th>
+            <th class="blue-bg" style="text-align: left;">Tipo Documento</th>
+            <th class="blue-bg" style="text-align: left;">Número Documento</th>
+            <th class="blue-bg" style="text-align: left;">Observação</th>
+            <th rowspan="2" style="text-align: center;" class="blue-bg">Ações</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-documentos>
+          <tr>
+            <td class="col-120px">
+              {{documentos.id}}
+            </td>
+
+            <!--<td>
+               <span *ngIf="documentos.tipoDocumento === 'RG'">
+                  {{'REGISTRO GERAL'}}
+               </span>
+               <span *ngIf="documentos.tipoDocumento === 'C'">
+                  {{'COMERCIAL'}}
+               </span>
+            </td> -->
+
+            <td>
+               {{documentos.tipoDocumento}}
+            </td>
+
+            <td>
+              {{documentos.numeroDocumento}}
+            </td>
+
+            <td>
+               {{documentos.observacao}}
+             </td>
+
+            <td class="col-acoes">
+              <button
+                pButton
+                type="button"
+                (click)="showDocumentosModalEdit(documentos.id)"
+                icon="pi pi-pencil"
+                style="margin-right:9px;">
+              </button>
+
+              <button
+                pButton
+                type="button"
+                (click)="showDocumentosModalDelete(documentos.id)"
+                icon="pi pi-trash"
+                class="ui-button-danger">
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+
